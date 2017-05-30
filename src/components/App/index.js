@@ -1,9 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Immutable from 'immutable';
+// import Immutable from 'immutable';
+import Popup from '../Popup';
 import './styles.css';
 
 class App extends Component {
+
+  componentDidMount() {
+    document.addEventListener("keyup", this.handleShortcuts);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("keyup", this.handleShortcuts);
+  }
+
+  handleShortcuts = e => {
+    if(e.which === 27) {
+      this.advanceInQueue();
+    }
+  }
 
   setPopupQueue = () => {
     const { setPopupQueue, popups } = this.props;
@@ -26,7 +41,7 @@ class App extends Component {
 
   advanceInQueue = () => {
     const { setPopupQueue, popup_queue } = this.props;
-    setPopupQueue(Immutable.List(popup_queue).pop());
+    setPopupQueue(popup_queue.slice(1));
   }
 
   render() {
@@ -47,10 +62,19 @@ class App extends Component {
           <label htmlFor="select-all">Select all </label>
           <input id="select-all" type="checkbox" ref={input => {this.selectAllInput = input}} />
           <hr/>
-          <button onClick={this.setPopupQueue}>open popup</button>
-          <button onClick={this.advanceInQueue}>advance</button>
-          <button onClick={this.resetInputs}>reset</button>
+          <button onClick={this.setPopupQueue}>Open</button>
         </div>
+        {
+          popup_queue.length
+            ? <Popup onCloseRequest={this.advanceInQueue}>
+                {
+                  popups.filter(item => {
+                    return item.id === popup_queue[0]
+                  })[0]
+                }
+              </Popup>
+            : null
+        }
       </div>
     );
   }
