@@ -27,11 +27,10 @@ class App extends Component {
       setPopupQueue(popups.reduce( (sum, cur) => {
         return [...sum, cur.id];
       }, []));
-      this.resetInputs();
     } else if (this.popupSelect.value !== 'empty') {
       setPopupQueue([this.popupSelect.value]);
-      this.resetInputs();
     }
+    this.resetInputs();
   }
 
   resetInputs = () => {
