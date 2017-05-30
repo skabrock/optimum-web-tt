@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import Immutable from 'immutable';
 import Popup from '../Popup';
 import './styles.css';
 

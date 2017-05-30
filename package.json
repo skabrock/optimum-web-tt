@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "immutable": "^3.8.1",
     "normalize.css": "^7.0.0",
     "ramda": "^0.24.0",
     "react": "^15.5.4",
